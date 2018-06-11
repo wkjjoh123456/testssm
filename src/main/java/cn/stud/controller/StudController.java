@@ -1,20 +1,18 @@
 package cn.stud.controller;
 
+import cn.stud.common.Result;
+import cn.stud.common.ResultGenerator;
 import cn.stud.entity.PageBean;
 import cn.stud.entity.Stud;
 import cn.stud.service.StudService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.commons.collections.iterators.ObjectArrayIterator;
-import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import util.ResponseUtil;
 import util.StringUtil;
+import org.apache.log4j.Logger;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -67,4 +65,42 @@ public class StudController {
 
     return null;
 }
+@RequestMapping(value="/{ids}",method = RequestMethod.DELETE)
+@ResponseBody
+public Result Delete(@PathVariable(value ="ids") String ids)
+{
+    if(ids.length()>20){
+        return ResultGenerator.genFailResult("ERROR");
+    }
+    String[] idsstr = ids.split(",");
+    System.out.println(idsstr);
+    for (int i = 0; i < idsstr.length; i++) {
+        studService.deleteUser(idsstr[i]);
+    }
+   return ResultGenerator.genSuccessResult();
+
+}
+@RequestMapping(value="",method =RequestMethod.POST)
+@ResponseBody
+public Result Add(@RequestBody Stud stud){
+     int resultTotal = 0;
+     resultTotal = studService.addUser(stud);
+
+    if (resultTotal > 0) {
+        return ResultGenerator.genSuccessResult();
+    } else {
+        return ResultGenerator.genFailResult("FAIL");
+    }
+}
+    @RequestMapping(value="",method =RequestMethod.PUT)
+    @ResponseBody
+    public Result update(@RequestBody Stud stud){
+        int resultTotal = studService.update(stud);
+
+        if (resultTotal > 0) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("FAIL");
+        }
+    }
 }

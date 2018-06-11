@@ -26,4 +26,9 @@ public interface StudMapper {
 
     Long getTotalUser(Map<String, Object> map);
 
+    int deleteUser(String id);
+
+    int addUser(Stud stud);
+
+    int updateUser(Stud stud);
 }
