@@ -55,7 +55,7 @@ public class StudController {
     map.put("name", StringUtil.formatLike(stud.getName()));
     map.put("start", pageBean.getStart());
     map.put("size", pageBean.getPagesize());
-    System.out.println((int)map.get("start")+(int)map.get("size"));
+
     List<Stud>  studList = studService.finduser(map);
     long total = studService.getTotalUser(map);
     JSONObject result = new JSONObject();
