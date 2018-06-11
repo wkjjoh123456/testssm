@@ -32,6 +32,37 @@
     </where>
   </select>
 
+  <delete id = "deleteUser" parameterType="String">
+
+    delete from stud1 where id=#{id}
+  </delete>
+
+  <insert id="addUser" parameterType="Map">
+    insert into stud1(id,name,age,sex,addr)
+    values(#{id},#{name},#{age},#{sex},#{addr})
+  </insert>
+
+
+  <update id="updateUser" parameterType="Map">
+    update stud1
+    <set>
+      <if test="name!=null and name!='' ">
+        name=#{name},
+      </if>
+      <if test="age!=null and age!='' ">
+        age=#{age},
+      </if>
+      <if test="addr!=null and addr!='' ">
+        addr=#{addr},
+      </if>
+      <if test="sex!=null and sex!='' ">
+        sex=#{sex}
+      </if>
+    </set>
+    where id=#{id}
+
+  </update>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

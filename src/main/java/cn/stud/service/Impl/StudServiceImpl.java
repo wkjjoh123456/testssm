@@ -31,4 +31,19 @@ public class StudServiceImpl implements StudService {
         return studMapper.getTotalUser(map);
     }
 
+    @Override
+    public int deleteUser(String id) {
+        return studMapper.deleteUser(id);
+    }
+
+    @Override
+    public int addUser(Stud stud) {
+        return studMapper.addUser(stud);
+    }
+
+    @Override
+    public int update(Stud stud) {
+        return studMapper.updateUser(stud);
+    }
+
 }
